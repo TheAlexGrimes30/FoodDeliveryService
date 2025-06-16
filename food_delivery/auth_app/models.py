@@ -31,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=128, unique=True)
     email = models.EmailField(max_length=256, unique=True)
     is_staff = models.BooleanField(default=False)
+    is_restaurant_owner = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, db_index=True)
 
     objects = UserManager()
