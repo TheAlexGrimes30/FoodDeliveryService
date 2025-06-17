@@ -16,9 +16,10 @@ class RegistrationView(FormView):
     success_url = reverse_lazy("index")
 
     def form_valid(self, form):
-        User.objects.create(
+        User.objects.create_user(
             username=form.cleaned_data['username'],
             email = form.cleaned_data['email'],
             password = make_password(form.cleaned_data['password'])
         )
         return super().form_valid(form)
+
