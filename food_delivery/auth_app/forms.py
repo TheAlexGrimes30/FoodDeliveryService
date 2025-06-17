@@ -2,21 +2,14 @@ from django import forms
 
 from auth_app.models import User
 
-
-class RegistrationForm(forms.Form):
+class AuthBaseForm(forms.Form):
     username = forms.CharField(
         max_length=128,
         widget=forms.TextInput(attrs={'placeholder': 'Введите логин'})
     )
-    email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'placeholder': 'Введите email'})
-    )
+
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'})
-    )
-
-    password_confirmed = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'})
     )
 
     def clean_username(self):
@@ -24,6 +17,16 @@ class RegistrationForm(forms.Form):
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError(f'Пользователь с таким {username} уже существует')
         return username
+
+class RegistrationForm(AuthBaseForm):
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'placeholder': 'Введите email'})
+    )
+
+    password_confirmed = forms.CharField(
+        widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'})
+    )
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -42,15 +45,12 @@ class RegistrationForm(forms.Form):
         if password and len(password) < 8:
             self.add_error('password', "Пароль слишком короткий (минимум 8 символов)")
 
+class AuthForm(AuthBaseForm):
 
+    def clean_password(self):
+        password = self.cleaned_data.get("password")
 
-class AuthForm(forms.Form):
+        if password and len(password) < 8:
+            self.add_error('password', "Пароль слишком короткий (минимум 8 символов)")
 
-    username = forms.CharField(
-        max_length=128,
-        widget=forms.TextInput(attrs={'placeholder': 'Введите логин'})
-    )
-
-    password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'})
-    )
+        return password
