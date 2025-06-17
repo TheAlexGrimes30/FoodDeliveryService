@@ -1,7 +1,8 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import FormView
 
 from auth_app.forms import RegistrationForm, AuthForm
@@ -41,4 +42,8 @@ class LoginView(FormView):
         else:
             form.add_error(None, "Неверный логин или пароль")
             return self.form_invalid(form)
-        
+
+class LogoutView(View):
+    def post(self, request):
+        logout(request)
+        return redirect(reverse_lazy("index"))

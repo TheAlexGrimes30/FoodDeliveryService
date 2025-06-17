@@ -2,9 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Food Delivery</title>
 </head>
 <body>
-
+    {% if user.is_authenticated %}
+        <p>Привет, {{ user.username }}!</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Выйти</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Вход</a> |
+        <a href="{% url 'register' %}">Регистрация</a>
+    {% endif %}
 </body>
 </html>
