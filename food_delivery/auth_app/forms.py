@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate
 
 from auth_app.models import User
 
@@ -47,4 +48,16 @@ class RegistrationForm(AuthBaseForm):
             self.add_error('password', "Пароль слишком короткий (минимум 8 символов)")
 
 class AuthForm(AuthBaseForm):
-    pass
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user is None:
+                raise forms.ValidationError("Неверный логин или пароль")
+
+        return cleaned_data
+

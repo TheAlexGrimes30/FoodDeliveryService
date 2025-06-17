@@ -13,35 +13,35 @@
         <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
             <h2 class="text-center mb-4">Вход в систему</h2>
 
-                <form method="post" novalidate>
-                    {% csrf_token %}
+            <form method="post" novalidate>
+                {% csrf_token %}
 
-                    <div class="mb-3">
-                        {{ form.username }}
-                        {% if form.username.errors %}
-                            <div class="text-danger small">
-                                {% for error in form.username.errors %}
-                                    {{ error }}<br>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
+                <div class="mb-3">
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.username.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
 
-                    <div class="mb-3">
-                        {{ form.password }}
-                        {% if form.password.errors %}
-                            <div class="text-danger small">
-                                {% for error in form.password.errors %}
-                                    {{ error }}<br>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
+                <div class="mb-3">
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.password.errors %}
+                                {{ error }}<br>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
 
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-black">Login</button>
-                    </div>
-                </form>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-black">Login</button>
+                </div>
+            </form>
         </div>
     </div>
 </body>
