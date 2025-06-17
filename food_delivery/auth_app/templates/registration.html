@@ -3,29 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .btn-black {
+            background-color: #000;
+            color: #fff;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+        }
+
+        .btn-black:hover {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #000;
+        }
+    </style>
 </head>
-<body>
-    <h2>Регистрация</h2>
+<body class="bg-light">
 
-    <form method="post">
-        {% csrf_token %}
-        <div>
-            {{ form.username }}<br>
-        </div>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+        <h2 class="text-center mb-4">Регистрация</h2>
 
-        <div>
-            {{ form.email }}<br>
-        </div>
+        <form method="post">
+            {% csrf_token %}
 
-        <div>
-            {{ form.password }}<br>
-        </div>
+            <div class="mb-3">
+                {{ form.username }}
+            </div>
 
-        <div>
-            {{ form.password_confirm }}<br>
-        </div>
+            <div class="mb-3">
+                {{ form.email }}
+            </div>
 
-        <button type="submit">Зарегистрироваться</button>
-    </form>
+            <div class="mb-3">
+                {{ form.password }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.password_confirmed }}
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-black">Зарегистрироваться</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>

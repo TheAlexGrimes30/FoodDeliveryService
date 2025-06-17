@@ -5,21 +5,21 @@ from auth_app.models import User
 class AuthBaseForm(forms.Form):
     username = forms.CharField(
         max_length=128,
-        widget=forms.TextInput(attrs={'placeholder': 'Введите логин'})
+        widget=forms.TextInput(attrs={'placeholder': 'Введите логин', 'class': 'form-control'})
     )
 
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'})
+        widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль', 'class': 'form-control'})
     )
 
 class RegistrationForm(AuthBaseForm):
 
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'placeholder': 'Введите email'})
+        widget=forms.EmailInput(attrs={'placeholder': 'Введите email', 'class': 'form-control'})
     )
 
     password_confirmed = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'})
+        widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль', 'class': 'form-control'})
     )
 
     def clean_username(self):
