@@ -12,12 +12,6 @@ class AuthBaseForm(forms.Form):
         widget=forms.PasswordInput(attrs={'placeholder': 'Введите пароль'})
     )
 
-    def clean_username(self):
-        username = self.cleaned_data.get('username')
-        if User.objects.filter(username=username).exists():
-            raise forms.ValidationError(f'Пользователь с таким {username} уже существует')
-        return username
-
 class RegistrationForm(AuthBaseForm):
 
     email = forms.EmailField(
@@ -27,6 +21,13 @@ class RegistrationForm(AuthBaseForm):
     password_confirmed = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'})
     )
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError(f'Пользователь с таким {username} уже существует')
+        return username
+
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -46,11 +47,4 @@ class RegistrationForm(AuthBaseForm):
             self.add_error('password', "Пароль слишком короткий (минимум 8 символов)")
 
 class AuthForm(AuthBaseForm):
-
-    def clean_password(self):
-        password = self.cleaned_data.get("password")
-
-        if password and len(password) < 8:
-            self.add_error('password', "Пароль слишком короткий (минимум 8 символов)")
-
-        return password
+    pass
