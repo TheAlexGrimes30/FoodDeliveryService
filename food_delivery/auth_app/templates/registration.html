@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>Регистрация</title>
@@ -12,7 +12,6 @@
             border: 1px solid #000;
             transition: all 0.3s ease;
         }
-
         .btn-black:hover {
             background-color: #fff;
             color: #000;
@@ -26,23 +25,55 @@
     <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
         <h2 class="text-center mb-4">Регистрация</h2>
 
-        <form method="post">
+        <form method="post" novalidate>
             {% csrf_token %}
 
             <div class="mb-3">
+                {{ form.username.label_tag }}
                 {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="text-danger small">
+                        {% for error in form.username.errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="mb-3">
+                {{ form.email.label_tag }}
                 {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="text-danger small">
+                        {% for error in form.email.errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="mb-3">
+                {{ form.password.label_tag }}
                 {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="text-danger small">
+                        {% for error in form.password.errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="mb-3">
+                {{ form.password_confirmed.label_tag }}
                 {{ form.password_confirmed }}
+                {% if form.password_confirmed.errors %}
+                    <div class="text-danger small">
+                        {% for error in form.password_confirmed.errors %}
+                            {{ error }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <div class="d-grid">
