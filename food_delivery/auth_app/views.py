@@ -20,8 +20,9 @@ class RegistrationView(FormView):
     def form_valid(self, form):
         user = User.objects.create_user(
             username=form.cleaned_data['username'],
-            email = form.cleaned_data['email'],
-            password = make_password(form.cleaned_data['password'])
+            email=form.cleaned_data['email'],
+            password=make_password(form.cleaned_data['password']),
+            is_restaurant_owner=form.cleaned_data.get('is_restaurant_owner', False)
         )
         login(self.request, user)
         return super().form_valid(form)
