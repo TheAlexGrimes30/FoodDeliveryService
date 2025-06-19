@@ -23,6 +23,8 @@ class RegistrationForm(AuthBaseForm):
         widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль', 'class': 'form-control'})
     )
 
+    is_restaurant_owner = forms.BooleanField(required=False, label="Я владелец ресторана")
+
     def clean_username(self):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
