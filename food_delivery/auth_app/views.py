@@ -1,5 +1,4 @@
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -21,7 +20,7 @@ class RegistrationView(FormView):
         user = User.objects.create_user(
             username=form.cleaned_data['username'],
             email=form.cleaned_data['email'],
-            password=make_password(form.cleaned_data['password']),
+            password=form.cleaned_data['password'],
             is_restaurant_owner=form.cleaned_data.get('is_restaurant_owner', False)
         )
         login(self.request, user)
@@ -33,16 +32,27 @@ class LoginView(FormView):
     success_url = reverse_lazy("index")
 
     def form_valid(self, form):
+        print("form_valid reached")
+        print(form.cleaned_data)
+
         username = form.cleaned_data.get("username")
         password = form.cleaned_data.get("password")
-        user = authenticate(self.request, username=username, password=password)
+
+        user = authenticate(username=username, password=password)
+        print("Authenticated user:", user)
 
         if user is not None:
             login(self.request, user)
+            print("Login successful:", user)
             return redirect(self.get_success_url())
         else:
             form.add_error(None, "Неверный логин или пароль")
             return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        print("form_invalid reached")
+        print("Errors:", form.errors)
+        return super().form_invalid(form)
 
 class LogoutView(View):
     def post(self, request):
